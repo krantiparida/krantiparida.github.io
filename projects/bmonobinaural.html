@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<!-- saved from url=(0064)https://blackrockdigital.github.io/startbootstrap-scrolling-nav/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Beyond Image to Depth</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./assets/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./assets/scrolling-nav.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/wavesurfer.min.js"></script>
+
+    <script>
+
+        $(document).ready(function(){
+            var default_h = 384;
+            var default_w = 512;
+
+            function initWaveSurfer(name, domEl, url) {
+              window[name] = WaveSurfer.create({
+                container: domEl,
+                waveColor: 'blue',
+                progressColor: 'green'
+              });
+              window[name].load(url);
+            }
+
+            var sound_srcs = $('*[data-src*=sound-of-pixels]:visible');
+            for (var i = 0, len = sound_srcs.length; i < len; i++){
+                var e = sound_srcs[i];
+                container_name = '#' + e.getAttribute("id");
+                url = e.getAttribute("data-src");
+                if (container_name.includes('input')) {
+                    index = container_name.split('input')[1];
+                    wavesurfer_name = 'soundtrack' + index;
+                } else {
+                    index = container_name.split('demo')[1];
+                    wavesurfer_name = 'wavesurfer' + index;
+                }
+                initWaveSurfer(wavesurfer_name, container_name, url )
+            }
+
+
+            $("video").click(function (e) {
+                var video_name = $(this).attr('class').split(' ')[0];
+                var video = $("video." + video_name)[0];
+                if (video_name.includes("input")) {
+                    playOriginal(video_name, video)
+                } else {
+                    playDemo(video_name, video, e)
+                }
+            });
+
+            function playOriginal(video_name, video) {
+              wave_surfer_name = 'soundtrack' + video_name.split('Video')[1];
+              wavesurfer = window[wave_surfer_name];
+              video.muted = true;
+              video.currentTime = 0;
+              video.play();
+              wavesurfer.play([0]);
+            }
+
+            function playDemo(video_name, video, e) {
+              index = video_name.split('Video')[1];
+              wave_surfer_name = 'wavesurfer' + index;
+              wavesurfer = window[wave_surfer_name];
+              var scale = 16;
+              var offset = $(video).offset();
+              var xPos = e.pageX - offset.left;
+              var yPos = e.pageY - offset.top;
+              var x = Math.floor(xPos/video.clientWidth*default_w/scale)+1;
+              var y = Math.floor(yPos/video.clientHeight*default_h/scale)+1;
+              var x = Math.min(Math.max(x, 1), 32);
+              var y = Math.min(Math.max(y, 1), 24);
+              // console.log(x, y);
+              var sound_src = $(video)[0].src.slice(0, -4) + '/' + x + '_' + y + '.wav';
+              video.muted = true;
+              video.currentTime = 0;
+
+              // wavesurfer:
+              wavesurfer.empty();
+              wavesurfer.load(sound_src);
+              wavesurfer.on('ready', function () {
+                  video.play();
+                  wavesurfer.play();
+              });
+
+              // top is vertical direction, left is horizontal position
+              // offset chosen by inspection
+              var newtop = String((y-1) * video.clientHeight / default_h * scale + 40) +'px';
+              var newleft = String((x-1) * video.clientWidth / default_w * scale + 15) + 'px';
+              // console.log(newtop, newleft);
+              $(".overlay#dot" + index).css({"opacity": "0.5", "background": "red", "top": newtop, "left": newleft});
+            }
+
+        });
+
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-60734989-3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-60734989-3');
+    </script>
+
+    <style>
+      p.lead a {
+        color: rgb(10, 96, 155);
+      }
+      header.bg-primary {
+        /*margin-bottom: 0rem;*/
+        height: 0rem;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+      }
+      h2 {
+        text-align: center;
+      }
+      video {
+        cursor: pointer;
+      }
+
+      .overlay {
+          height: 17.625px;
+          width: 22.727px;
+          position: absolute;
+          top: 45px;
+          left: 15px;
+          z-index: 2;
+          background: red;
+          opacity: 0;
+          border-radius: 80px
+        }
+    </style>
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Beyond Mono to Binaural</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#abstract">Abstract</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#download">Download</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#res">Results</a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#sup-res">Supplementary Results</a>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="bg-primary text-black">
+      <div class="container text-center" style="margin-top:-6rem;">
+        <h2>Beyond Mono to Binaural: Generating Binaural Audio from Mono Audio with Depth and Cross Modal Attention</h2>
+               <!-- <h2> for</h2> <br>  -->
+        <!-- <h2>Generalized Audio-Visual Zeroshot Classification and Retrieval of Videos</h2> -->
+        <p class="lead">
+          <font size="5"><a href="http://www.cse.iitk.ac.in/users/kranti">Kranti Kumar Parida</a><sup> 1</sup>,
+          <a href="https://siddharthsrivastava.github.io/">Siddharth Srivastava</a><sup>2</sup>,
+          <a href="https://grvsharma.com/">Gaurav Sharma</a><sup>1, 3</sup>
+          <p><sup>1</sup>IIT Kanpur, <sup>2</sup>CDAC Noida, <sup>3</sup>TensorTour Inc.</p>
+          </font>  
+
+      </div>
+    </header>
+
+    <section id="demo" style="margin-bottom:-16rem;width:100%;">
+    <div class="container" style="margin-top:-7rem;width:100%;">
+        <div class="row">
+          <div><img src="./b_mono_binaural/img/block_diag.png" width="100%"></div>
+        </div>
+    </div>
+    </section>
+    <section id="abstract" style="margin-top:-5rem;margin-bottom:-9rem;">
+      <div class="container">
+        <!-- <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <div><img src="./img/avzsl.png" width="90%"></div>
+            </div>
+            <div class="col-lg-6 mx-auto">
+                <div><img src="./img/block_diag.png" width="90%"></div>
+            </div>
+        </div>       -->
+        <div class="row">
+          <div class="col-lg-12 mx-auto">
+            <p class="lead" align="justify">
+            Binaural audio gives the listener an immersive experience and can especially enhance augmented and virtual reality. However, recording binaural audio requires specialized setup with a dummy human head with microphones in the left and right ears. Due to the difficulty in having and using such setup for recording, mono audio is the popular choice in usual devices. Researchers have tried to lift mono audio to binaural audio conditioning on the visual input from the scene. Such approaches have not used an important cue for the task: the distance of different sound producing objects from the microphones. In this work, we argue that depth map of the scene can act as a proxy for inducing distance information of different objects in the scene, for the task of audio binauralization. We propose a novel encoder-decoder architecture with a hierarchical attention mechanism to encode image, depth and audio feature jointly. We design the network on top of state-of-the-art transformer networks for image and depth representation. We show empirically that the proposed method outperforms state-of-the-art methods comfortably for two challenging public datasets FAIR-Play and MUSIC-Stereo. We also demonstrate with qualitative results that the method is able to focus on the right information required for the task.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="download" class="bg-light">
+      <div class="container" style="margin-top:-5rem;margin-bottom:-5rem;">
+        <div class="row">
+          <div class="col-lg-4 mx-auto text-center">
+            <h2>Paper</h2>
+            <a target="_blank " href=""><img src="./b_mono_binaural/img/paper.png" height=200 style="border:1px solid black;"></a>
+          </div>
+          <div class="col-lg-4 mx-auto text-center">
+            <h2>Supplementary</h2>
+            <a target="_blank " href=""><img src="./b_mono_binaural/img/supple.png" height=200 style="border:1px solid black;"></a>
+          </div>
+          <div class="col-lg-4 mx-auto text-center">
+            <h2>Code, Model, Dataset</h2>
+            <a target="_blank " href=""><img src="./b_img_depth/img/git-logo.png" height=200 style="border:1px solid black;"></a>
+          </div>
+    
+        </div>
+      </div>
+    </section>
+
+    <section id="sup-res" style="margin-bottom:-5rem;width:100%;">
+        <div class="container" style="margin-top:-5rem;width:100%;">
+            <div class="row">
+                <div class="col-lg-12 mx-auto"><h2>Qualitative Results</h2></div>
+            </div>
+            <div class="row" style="margin-top:10px;">   
+                <div class="col-lg-12 mx-auto" >
+                    <div>
+                        <video width="100%" controls>
+                            <source src="./b_mono_binaural/vids/exmp1.mp4" type="video/mp4">
+                        </video>
+                    </div>
+    
+                </div>
+            </div>
+            <div class="row" style="margin-top:10px;">     
+                <div class="col-lg-12 mx-auto text-center" >
+                    <!-- <div class="col-lg-12 mx-auto"><h6>Video Misclassified</h6></div> -->
+                    <div>
+                        <video width="100%" controls>
+                            <source src="./b_mono_binaural/vids/exmp2.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div> 
+            </div>
+            <div class="row" style="margin-top:10px;">     
+                <div class="col-lg-12 mx-auto text-center" >
+                    <!-- <div class="col-lg-12 mx-auto"><h6>Video Misclassified</h6></div> -->
+                    <div>
+                        <video width="100%" controls>
+                            <source src="./b_mono_binaural/vids/exmp3.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:10px;">     
+                <div class="col-lg-12 mx-auto text-center" >
+                    <!-- <div class="col-lg-12 mx-auto"><h6>Video Misclassified</h6></div> -->
+                    <div>
+                        <video width="100%" controls>
+                            <source src="./b_mono_binaural/vids/exmp4.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </section>         
+  
+  
+   
+
+    <!-- <section id="sup-res" style="margin-bottom:-5rem;width:100%;">
+        <div class="container" style="margin-top:-5rem;width:100%;">
+        <div class="row">
+            <div class="col-lg-12 mx-auto"><h2>Supplementary Video Results</h2></div>
+        </div>
+        <div class="row" style="margin-top:10px;">   
+            <div class="col-lg-12 mx-auto" >
+                <div>
+                    <video width="100%" controls>
+                        <source src="./b_img_depth/res/audio_misclassified_video_correct.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>             -->
+    
+
+    <section id="reference" class="bg-light">
+      <div class="container" style="margin-top:-5rem;width:100%;">
+        <!-- <div class="row">  <br>   </div> -->
+        <div class="row" style="margin-top:10px;">
+            <div class="col-lg-12 mx-auto"><h2>Reference</h2></div>
+            <p>If you use the code or dataset from the project, please cite:</p>
+            <div class="highlight highlight-text-bibtex"><pre><span class="pl-c">    </span><span class="pl-k">@InProceedings</span>{<span class="pl-en">parida2022beyond</span>,
+            <span class="pl-s">author</span> = <span class="pl-s"><span class="pl-pds">{</span>Parida, Kranti Kumar and Srivastava, Siddharth and Sharma, Gaurav<span class="pl-pds">}</span></span>,
+            <span class="pl-s">title</span> = <span class="pl-s"><span class="pl-pds">{</span>Beyond Mono to Binaural: Generating Binaural Audio from Mono Audio with Depth and Cross Modal Attention<span class="pl-pds">}</span></span>,
+            <span class="pl-s">booktitle</span> = <span class="pl-s"><span class="pl-pds">{</span>Proceedings of the IEEE/CVF conference on winter conference on application of computer vision<span class="pl-pds">}</span></span>,
+            <span class="pl-s">year</span> = <span class="pl-s"><span class="pl-pds">{</span>2022<span class="pl-pds">}</span></span>
+        }</pre></div>
+        </div>
+        <div class="row">  <br>   </div>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Webpage Template Courtesy <a href="http://sound-of-pixels.csail.mit.edu/">CSAIL, MIT</a>.</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="./assets/jquery.min.js"></script>
+    <script src="./assets/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="./assets/jquery.easing.min.js"></script>
+
+    <!-- Custom JavaScript for this theme -->
+    <script src="./assets/scrolling-nav.js"></script>
+
+
+</body></html>
