@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+<!-- saved from url=(0064)https://blackrockdigital.github.io/startbootstrap-scrolling-nav/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>>Watching the lips to listen better</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./assets/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./assets/scrolling-nav.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/wavesurfer.min.js"></script>
+
+    <script>
+
+        $(document).ready(function(){
+            var default_h = 384;
+            var default_w = 512;
+
+            function initWaveSurfer(name, domEl, url) {
+              window[name] = WaveSurfer.create({
+                container: domEl,
+                waveColor: 'blue',
+                progressColor: 'green'
+              });
+              window[name].load(url);
+            }
+
+            var sound_srcs = $('*[data-src*=sound-of-pixels]:visible');
+            for (var i = 0, len = sound_srcs.length; i < len; i++){
+                var e = sound_srcs[i];
+                container_name = '#' + e.getAttribute("id");
+                url = e.getAttribute("data-src");
+                if (container_name.includes('input')) {
+                    index = container_name.split('input')[1];
+                    wavesurfer_name = 'soundtrack' + index;
+                } else {
+                    index = container_name.split('demo')[1];
+                    wavesurfer_name = 'wavesurfer' + index;
+                }
+                initWaveSurfer(wavesurfer_name, container_name, url )
+            }
+
+
+            $("video").click(function (e) {
+                var video_name = $(this).attr('class').split(' ')[0];
+                var video = $("video." + video_name)[0];
+                if (video_name.includes("input")) {
+                    playOriginal(video_name, video)
+                } else {
+                    playDemo(video_name, video, e)
+                }
+            });
+
+            function playOriginal(video_name, video) {
+              wave_surfer_name = 'soundtrack' + video_name.split('Video')[1];
+              wavesurfer = window[wave_surfer_name];
+              video.muted = true;
+              video.currentTime = 0;
+              video.play();
+              wavesurfer.play([0]);
+            }
+
+            function playDemo(video_name, video, e) {
+              index = video_name.split('Video')[1];
+              wave_surfer_name = 'wavesurfer' + index;
+              wavesurfer = window[wave_surfer_name];
+              var scale = 16;
+              var offset = $(video).offset();
+              var xPos = e.pageX - offset.left;
+              var yPos = e.pageY - offset.top;
+              var x = Math.floor(xPos/video.clientWidth*default_w/scale)+1;
+              var y = Math.floor(yPos/video.clientHeight*default_h/scale)+1;
+              var x = Math.min(Math.max(x, 1), 32);
+              var y = Math.min(Math.max(y, 1), 24);
+              // console.log(x, y);
+              var sound_src = $(video)[0].src.slice(0, -4) + '/' + x + '_' + y + '.wav';
+              video.muted = true;
+              video.currentTime = 0;
+
+              // wavesurfer:
+              wavesurfer.empty();
+              wavesurfer.load(sound_src);
+              wavesurfer.on('ready', function () {
+                  video.play();
+                  wavesurfer.play();
+              });
+
+              // top is vertical direction, left is horizontal position
+              // offset chosen by inspection
+              var newtop = String((y-1) * video.clientHeight / default_h * scale + 40) +'px';
+              var newleft = String((x-1) * video.clientWidth / default_w * scale + 15) + 'px';
+              // console.log(newtop, newleft);
+              $(".overlay#dot" + index).css({"opacity": "0.5", "background": "red", "top": newtop, "left": newleft});
+            }
+
+        });
+
+    </script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-60734989-3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-60734989-3');
+    </script>
+
+    <style>
+      p.lead a {
+        color: rgb(10, 96, 155);
+      }
+      header.bg-primary {
+        /*margin-bottom: 0rem;*/
+        height: 0rem;
+      }
+
+      h1 {
+        font-size: 3.5rem;
+      }
+      h2 {
+        text-align: center;
+      }
+      video {
+        cursor: pointer;
+      }
+
+      .overlay {
+          height: 17.625px;
+          width: 22.727px;
+          position: absolute;
+          top: 45px;
+          left: 15px;
+          z-index: 2;
+          background: red;
+          opacity: 0;
+          border-radius: 80px
+        }
+    </style>
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Watching the lips to listen better</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#abstract">Abstract</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#download">Download</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#res">Results</a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#sup-res">Supplementary Results</a>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="bg-primary text-black">
+      <div class="container text-center" style="margin-top:-6rem;">
+        <h2>Watching the lips to listen better: Speech denoising using cross-modal audio-visual attention</h2>
+               <!-- <h2> for</h2> <br>  -->
+        <!-- <h2>Generalized Audio-Visual Zeroshot Classification and Retrieval of Videos</h2> -->
+        <p class="lead">
+          <font size="5"><a href="https://krantiparida.github.io/">Kranti Kumar Parida</a><sup> 1, 2</sup>,
+          <a href="https://siddharthsrivastava.github.io/">Siddharth Srivastava</a><sup>2</sup>,
+          <a href="https://grvsharma.com/">Gaurav Sharma</a><sup>1, 2</sup>
+          <p><sup>1</sup>IIT Kanpur, <sup>2</sup>TensorTour Inc.</p>
+          </font>  
+
+      </div>
+    </header>
+
+    <section id="demo" style="margin-bottom:-16rem;width:100%;">
+    <div class="container" style="margin-top:-7rem;width:100%;">
+        <div class="row">
+          <div><img src="./audio_visual_speech_denoising/imgs/block_diag.jpg" width="100%"></div>
+        </div>
+    </div>
+    </section>
+    <section id="abstract" style="margin-top:-5rem;margin-bottom:-9rem;">
+      <div class="container">
+        <!-- <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <div><img src="./img/avzsl.png" width="90%"></div>
+            </div>
+            <div class="col-lg-6 mx-auto">
+                <div><img src="./img/block_diag.png" width="90%"></div>
+            </div>
+        </div>       -->
+        <div class="row">
+          <div class="col-lg-12 mx-auto">
+            <p class="lead" align="justify">
+              We address the problem of speech denoising where the goal is to extract clean speech signal from a noisy signal. Traditionally, the task of denoising has been performed using audio modality only. However, human speech perception is inherently multimodal where cues from visual modality are used to better understand what is being said in a noisy environment. Similar observation has been made with computational denoising methods, i.e., performance of audio only model improves when visual modality is added. Inspired by these findings we propose a novel audio-visual fusion network for adaptively combining both modalities for the task of speech audio denoising. We improve upon an existing audio only approach which first extracts the silent intervals (short pauses) and then uses them for estimating noise profile, which it eventually employs for denoising. We show that instead of explicitly extracting the silent region and then denoising, training an end-to-end network is more appropriate, and adding visual information, from lip regions, further improves the performance. We evaluate the proposed approach on a large scale audio-visual dataset Voxceleb2 and obtain state-of-the-art results. We also demonstrate generalization to unseen speakers at test time.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="download" class="bg-light">
+      <div class="container" style="margin-top:-5rem;margin-bottom:-5rem;">
+        <div class="row">
+          <div class="col-lg-4 mx-auto text-center">
+            <h2>Paper</h2>
+            <a target="_blank " href=""><img src="" height=200 style="border:1px solid black;"></a>
+          </div>
+          <div class="col-lg-4 mx-auto text-center">
+            <h2>Supplementary</h2>
+            <a target="_blank " href=""><img src="" height=200 style="border:1px solid black;"></a>
+          </div>
+          <div class="col-lg-4 mx-auto text-center">
+            <h2>Code, Model, Dataset</h2>
+            <a target="_blank " href=""><img src="./b_img_depth/img/git-logo.png" height=200 style="border:1px solid black;"></a>
+          </div>
+    
+        </div>
+      </div>
+    </section>
+
+    <section id="sup-res" style="margin-bottom:-5rem;width:100%;">
+        <div class="container" style="margin-top:-5rem;width:100%;">
+          <div class="row">
+            <div class="col-lg-12 mx-auto"><h2>Qualitative Results</h2></div>
+          </div>
+          <table>
+            <style> table, th, td {border: 1px solid black;} </style>
+            <th>Noisy Audio</th>
+            <th>Output</th>
+            <th>Remarks</th>
+            <tr>
+                <td>
+                    <video width="356" height="200" controls>
+                        <source src="./audio_visual_speech_denoising/qualitative_results/real_videos/rec430_noisy.mp4" type="video/mp4">
+                    </video>
+               </td>
+               <td>
+                   <video width="356" height="200" controls>
+                      <source src="./audio_visual_speech_denoising/qualitative_results/real_videos/rec430_clean.mp4" type="video/mp4">
+                   </video>
+               </td>
+               <td>Video recorded in a heavy background noise and can be found commonly for YouTubers recording cooking video. 
+                   Our method is able to extract out the clean signal.
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <video width="356" height="200" controls>
+                        <source src="./audio_visual_speech_denoising/qualitative_results/real_videos/reporter_windy_noisy.mp4" type="video/mp4">
+                    </video>
+               </td>
+               <td>
+                   <video width="356" height="200" controls>
+                      <source src="./audio_visual_speech_denoising/qualitative_results/real_videos/reporter_windy_clean.mp4" type="video/mp4">
+                   </video>
+               </td>
+               <td> A reported reporting under a very windy condition. Our method is able to extract out the input speech signal. 
+                   Although our method degrades in the region where it ovelaps with the strong wind noise but the speech is clean and the 
+                   words can be easily understood.
+                   <br>
+                   link: <a href="https://www.youtube.com/watch?v=zbdf1ayyijc" target="_blank">https://www.youtube.com/watch?v=zbdf1ayyijc</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <video width="356" height="200" controls>
+                        <source src="./audio_visual_speech_denoising/qualitative_results/real_videos/youtuber_noisy.mp4" type="video/mp4">
+                    </video>
+               </td>
+               <td>
+                   <video width="356" height="200" controls>
+                      <source src="./audio_visual_speech_denoising/qualitative_results/real_videos/youtuber_clean.mp4" type="video/mp4">
+                   </video>
+               </td>
+               <td> In this video a YouTuber is recording in a busy street where the audio is mixed with vehicle noise and other persons' voice.
+                   Here, we can observe that the background noise like car honking and random chatter is decreased significantly. Also towards the end
+                   of the video an engine like noise can be heard in the original video and this has completely been removed by our method. 
+                   <br>
+                   link: <a href="https://www.youtube.com/watch?v=9qM2ZAJsKCg" target="_blank">https://www.youtube.com/watch?v=9qM2ZAJsKCg</a>
+               </td>
+            </tr>
+            <tr>
+                <td>
+                    <video width="356" height="200" controls>
+                        <source src="./audio_visual_speech_denoising/qualitative_results/real_videos/reporter_war_noisy.mp4" type="video/mp4">
+                    </video>
+               </td>
+               <td>
+                   <video width="356" height="200" controls>
+                      <source src="./audio_visual_speech_denoising/qualitative_results/real_videos/reporter_war_clean.mp4" type="video/mp4">
+                   </video>
+               </td>
+               <td> Here, a reporter is reporting from a violent protest site and the input audio conatins a variety of backgorund noise. 
+                    Towards the end of the video, it can be seen that some explosive is thrown towards the reporter that makes a blast sound. 
+                    This blast sound is almost completely removed in our denoised output.
+                   <br>
+                   link: <a href="https://youtu.be/RH8S8RhtvHA?t=83" target="_blank">https://youtu.be/RH8S8RhtvHA?t=83</a> 
+               </td>
+            </tr>
+        </table>
+        
+        <br>
+        <br>  
+
+        <h4>More qualitative results in the test set of the dataset along with different baselines.</h4>
+
+        <table>
+          <style> table, th, td {border: 1px solid black;} </style>
+          <tr>
+            <th>SNR</th>
+            <th>Clean audio</th>
+            <th>Mixed audio</th>
+            <th>Audio-only</th>
+            <th>Video-only</th>
+            <th>Ours</th>
+          </tr>
+          
+          <tr>
+            <td>-10</td>
+            <td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-10/id06692_9vs0zAHfI0M_00132_noise_wind_-RV30zqnIrU_0_input_audio.wav"></audio></td>
+            <td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-10/id06692_9vs0zAHfI0M_00132_noise_wind_-RV30zqnIrU_0_mixed_sig.wav"></audio></td>
+            <td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-10/id06692_9vs0zAHfI0M_00132_noise_wind_-RV30zqnIrU_0_output_sig.wav"></audio></td>
+            <td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_-10/id06692_9vs0zAHfI0M_00132_noise_wind_-RV30zqnIrU_0_output_sig.wav"></audio></td>
+            <td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_-10/id06692_9vs0zAHfI0M_00132_noise_wind_-RV30zqnIrU_0_output_sig.wav"></audio></td>
+          </tr>
+          
+          <tr>
+            <td>-10</td>
+            <td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-10/id07426_s747isSlMFU_00204_noise_wind_-PabZ_M642U_0_input_audio.wav"></audio></td>
+            <td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-10/id07426_s747isSlMFU_00204_noise_wind_-PabZ_M642U_0_mixed_sig.wav"></audio></td>
+            <td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-10/id07426_s747isSlMFU_00204_noise_wind_-PabZ_M642U_0_output_sig.wav"></audio></td>
+            <td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_-10/id07426_s747isSlMFU_00204_noise_wind_-PabZ_M642U_0_output_sig.wav"></audio></td>
+            <td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_-10/id07426_s747isSlMFU_00204_noise_wind_-PabZ_M642U_0_output_sig.wav"></audio></td>
+          </tr>
+          
+          <tr><td>-10</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-10/id04627_6B5POEGYP6U_00012_noise_musical_instrument_-1FZ5PfpQmo_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-10/id04627_6B5POEGYP6U_00012_noise_musical_instrument_-1FZ5PfpQmo_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-10/id04627_6B5POEGYP6U_00012_noise_musical_instrument_-1FZ5PfpQmo_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_-10/id04627_6B5POEGYP6U_00012_noise_musical_instrument_-1FZ5PfpQmo_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_-10/id04627_6B5POEGYP6U_00012_noise_musical_instrument_-1FZ5PfpQmo_30_output_sig.wav"></audio></td></tr><tr><td>-7</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-7/id05714_becwJYxVS78_00019_noise_laughter_EvbBRhEJEB0_0_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-7/id05714_becwJYxVS78_00019_noise_laughter_EvbBRhEJEB0_0_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-7/id05714_becwJYxVS78_00019_noise_laughter_EvbBRhEJEB0_0_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_-7/id05714_becwJYxVS78_00019_noise_laughter_EvbBRhEJEB0_0_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_-7/id05714_becwJYxVS78_00019_noise_laughter_EvbBRhEJEB0_0_output_sig.wav"></audio></td></tr><tr><td>-7</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-7/id07874__3D5upGq24U_00185_noise_musical_instrument_-cyXTfTbNcQ_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-7/id07874__3D5upGq24U_00185_noise_musical_instrument_-cyXTfTbNcQ_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-7/id07874__3D5upGq24U_00185_noise_musical_instrument_-cyXTfTbNcQ_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_-7/id07874__3D5upGq24U_00185_noise_musical_instrument_-cyXTfTbNcQ_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_-7/id07874__3D5upGq24U_00185_noise_musical_instrument_-cyXTfTbNcQ_30_output_sig.wav"></audio></td></tr><tr><td>-7</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-7/id08392_21XJV5tWMAw_00005_noise_musical_instrument_-QjYRWTAMhM_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-7/id08392_21XJV5tWMAw_00005_noise_musical_instrument_-QjYRWTAMhM_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-7/id08392_21XJV5tWMAw_00005_noise_musical_instrument_-QjYRWTAMhM_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_-7/id08392_21XJV5tWMAw_00005_noise_musical_instrument_-QjYRWTAMhM_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_-7/id08392_21XJV5tWMAw_00005_noise_musical_instrument_-QjYRWTAMhM_30_output_sig.wav"></audio></td></tr><tr><td>-3</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-3/id05124_uPPqcWVd-dg_00468_noise_wind_1W9HXtAFtb4_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-3/id05124_uPPqcWVd-dg_00468_noise_wind_1W9HXtAFtb4_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-3/id05124_uPPqcWVd-dg_00468_noise_wind_1W9HXtAFtb4_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_-3/id05124_uPPqcWVd-dg_00468_noise_wind_1W9HXtAFtb4_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_-3/id05124_uPPqcWVd-dg_00468_noise_wind_1W9HXtAFtb4_30_output_sig.wav"></audio></td></tr><tr><td>-3</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-3/id04295_fxkmapK8RMs_00167_noise_musical_instrument_-B2ri1yzS20_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-3/id04295_fxkmapK8RMs_00167_noise_musical_instrument_-B2ri1yzS20_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-3/id04295_fxkmapK8RMs_00167_noise_musical_instrument_-B2ri1yzS20_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_-3/id04295_fxkmapK8RMs_00167_noise_musical_instrument_-B2ri1yzS20_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_-3/id04295_fxkmapK8RMs_00167_noise_musical_instrument_-B2ri1yzS20_30_output_sig.wav"></audio></td></tr><tr><td>-3</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-3/id08552_zBtMWA0X2Pk_00285_noise_laughter_EvbBRhEJEB0_0_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-3/id08552_zBtMWA0X2Pk_00285_noise_laughter_EvbBRhEJEB0_0_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_-3/id08552_zBtMWA0X2Pk_00285_noise_laughter_EvbBRhEJEB0_0_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_-3/id08552_zBtMWA0X2Pk_00285_noise_laughter_EvbBRhEJEB0_0_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_-3/id08552_zBtMWA0X2Pk_00285_noise_laughter_EvbBRhEJEB0_0_output_sig.wav"></audio></td></tr><tr><td>0</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_0/id06811_QibFE4o9De0_00135_noise_musical_instrument_-Ak6H0jLqq4_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_0/id06811_QibFE4o9De0_00135_noise_musical_instrument_-Ak6H0jLqq4_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_0/id06811_QibFE4o9De0_00135_noise_musical_instrument_-Ak6H0jLqq4_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_0/id06811_QibFE4o9De0_00135_noise_musical_instrument_-Ak6H0jLqq4_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_0/id06811_QibFE4o9De0_00135_noise_musical_instrument_-Ak6H0jLqq4_30_output_sig.wav"></audio></td></tr><tr><td>0</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_0/id07494_r-ToqH_EJNs_00318_noise_wind_0W6hFtLZBbQ_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_0/id07494_r-ToqH_EJNs_00318_noise_wind_0W6hFtLZBbQ_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_0/id07494_r-ToqH_EJNs_00318_noise_wind_0W6hFtLZBbQ_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_0/id07494_r-ToqH_EJNs_00318_noise_wind_0W6hFtLZBbQ_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_0/id07494_r-ToqH_EJNs_00318_noise_wind_0W6hFtLZBbQ_30_output_sig.wav"></audio></td></tr><tr><td>0</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_0/id05202_SvXF1GGIaQ0_00132_noise_wind_0gq41a9opJ8_150_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_0/id05202_SvXF1GGIaQ0_00132_noise_wind_0gq41a9opJ8_150_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_0/id05202_SvXF1GGIaQ0_00132_noise_wind_0gq41a9opJ8_150_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_0/id05202_SvXF1GGIaQ0_00132_noise_wind_0gq41a9opJ8_150_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_0/id05202_SvXF1GGIaQ0_00132_noise_wind_0gq41a9opJ8_150_output_sig.wav"></audio></td></tr><tr><td>3</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_3/id07396_uJPtbxlXi2c_00189_noise_engine_-JauqJnOVmI_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_3/id07396_uJPtbxlXi2c_00189_noise_engine_-JauqJnOVmI_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_3/id07396_uJPtbxlXi2c_00189_noise_engine_-JauqJnOVmI_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_3/id07396_uJPtbxlXi2c_00189_noise_engine_-JauqJnOVmI_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_3/id07396_uJPtbxlXi2c_00189_noise_engine_-JauqJnOVmI_30_output_sig.wav"></audio></td></tr><tr><td>3</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_3/id04253_HH-iOC056aQ_00170_noise_wind_0fB1C972a9s_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_3/id04253_HH-iOC056aQ_00170_noise_wind_0fB1C972a9s_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_3/id04253_HH-iOC056aQ_00170_noise_wind_0fB1C972a9s_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_3/id04253_HH-iOC056aQ_00170_noise_wind_0fB1C972a9s_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_3/id04253_HH-iOC056aQ_00170_noise_wind_0fB1C972a9s_30_output_sig.wav"></audio></td></tr><tr><td>3</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_3/id08374_nrw4btrElp8_00353_noise_musical_instrument_-YrHQ9UYfuY_0_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_3/id08374_nrw4btrElp8_00353_noise_musical_instrument_-YrHQ9UYfuY_0_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_3/id08374_nrw4btrElp8_00353_noise_musical_instrument_-YrHQ9UYfuY_0_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_3/id08374_nrw4btrElp8_00353_noise_musical_instrument_-YrHQ9UYfuY_0_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_3/id08374_nrw4btrElp8_00353_noise_musical_instrument_-YrHQ9UYfuY_0_output_sig.wav"></audio></td></tr><tr><td>7</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_7/id08374__YkWaHZV-uc_00265_noise_crying_sobbing_Ng89MH0Kmn8_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_7/id08374__YkWaHZV-uc_00265_noise_crying_sobbing_Ng89MH0Kmn8_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_7/id08374__YkWaHZV-uc_00265_noise_crying_sobbing_Ng89MH0Kmn8_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_7/id08374__YkWaHZV-uc_00265_noise_crying_sobbing_Ng89MH0Kmn8_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_7/id08374__YkWaHZV-uc_00265_noise_crying_sobbing_Ng89MH0Kmn8_30_output_sig.wav"></audio></td></tr><tr><td>7</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_7/id05850_WNF1CY-Lu3I_00051_noise_musical_instrument_-WYIW0eeHWE_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_7/id05850_WNF1CY-Lu3I_00051_noise_musical_instrument_-WYIW0eeHWE_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_7/id05850_WNF1CY-Lu3I_00051_noise_musical_instrument_-WYIW0eeHWE_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_7/id05850_WNF1CY-Lu3I_00051_noise_musical_instrument_-WYIW0eeHWE_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_7/id05850_WNF1CY-Lu3I_00051_noise_musical_instrument_-WYIW0eeHWE_30_output_sig.wav"></audio></td></tr><tr><td>7</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_7/id08552_HRtCk2Sg38E_00079_noise_musical_instrument_-YGR7c_L3wQ_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_7/id08552_HRtCk2Sg38E_00079_noise_musical_instrument_-YGR7c_L3wQ_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_7/id08552_HRtCk2Sg38E_00079_noise_musical_instrument_-YGR7c_L3wQ_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_7/id08552_HRtCk2Sg38E_00079_noise_musical_instrument_-YGR7c_L3wQ_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_7/id08552_HRtCk2Sg38E_00079_noise_musical_instrument_-YGR7c_L3wQ_30_output_sig.wav"></audio></td></tr><tr><td>10</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_10/id06692_2ptBBNIZXtI_00011_noise_musical_instrument_-HjsgcGC5KA_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_10/id06692_2ptBBNIZXtI_00011_noise_musical_instrument_-HjsgcGC5KA_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_10/id06692_2ptBBNIZXtI_00011_noise_musical_instrument_-HjsgcGC5KA_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_10/id06692_2ptBBNIZXtI_00011_noise_musical_instrument_-HjsgcGC5KA_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_10/id06692_2ptBBNIZXtI_00011_noise_musical_instrument_-HjsgcGC5KA_30_output_sig.wav"></audio></td></tr><tr><td>10</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_10/id04030_UAQYdNL40Ug_00060_noise_baby_cry_infant_cry_49SBSn_Vbn8_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_10/id04030_UAQYdNL40Ug_00060_noise_baby_cry_infant_cry_49SBSn_Vbn8_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_10/id04030_UAQYdNL40Ug_00060_noise_baby_cry_infant_cry_49SBSn_Vbn8_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_10/id04030_UAQYdNL40Ug_00060_noise_baby_cry_infant_cry_49SBSn_Vbn8_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_10/id04030_UAQYdNL40Ug_00060_noise_baby_cry_infant_cry_49SBSn_Vbn8_30_output_sig.wav"></audio></td></tr><tr><td>10</td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_10/id04656_rRtKL9Js9t4_00437_noise_musical_instrument_-V1FhPpoTSU_30_input_audio.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_10/id04656_rRtKL9Js9t4_00437_noise_musical_instrument_-V1FhPpoTSU_30_mixed_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_only/snr_10/id04656_rRtKL9Js9t4_00437_noise_musical_instrument_-V1FhPpoTSU_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/video_only/snr_10/id04656_rRtKL9Js9t4_00437_noise_musical_instrument_-V1FhPpoTSU_30_output_sig.wav"></audio></td><td><audio controls style="width: 210px;"><source src="./audio_visual_speech_denoising/qualitative_results/test_audio/audio_video/snr_10/id04656_rRtKL9Js9t4_00437_noise_musical_instrument_-V1FhPpoTSU_30_output_sig.wav"></audio></td></tr></table>
+
+        </div>
+    </section>         
+  
+  
+   
+
+    <!-- <section id="sup-res" style="margin-bottom:-5rem;width:100%;">
+        <div class="container" style="margin-top:-5rem;width:100%;">
+        <div class="row">
+            <div class="col-lg-12 mx-auto"><h2>Supplementary Video Results</h2></div>
+        </div>
+        <div class="row" style="margin-top:10px;">   
+            <div class="col-lg-12 mx-auto" >
+                <div>
+                    <video width="100%" controls>
+                        <source src="./b_img_depth/res/audio_misclassified_video_correct.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>             -->
+    
+
+    <section id="reference" class="bg-light">
+      <div class="container" style="margin-top:-5rem;width:100%;">
+        <!-- <div class="row">  <br>   </div> -->
+        <div class="row" style="margin-top:10px;">
+            <div class="col-lg-12 mx-auto"><h2>Reference</h2></div>
+            <p>If you use the code or dataset from the project, please cite:</p>
+            <div class="highlight highlight-text-bibtex"><pre><span class="pl-c">    </span><span class="pl-k">@InProceedings</span>{<span class="pl-en">parida2022beyond</span>,
+            <span class="pl-s">author</span> = <span class="pl-s"><span class="pl-pds">{</span>Parida, Kranti Kumar and Srivastava, Siddharth and Sharma, Gaurav<span class="pl-pds">}</span></span>,
+            <span class="pl-s">title</span> = <span class="pl-s"><span class="pl-pds">{</span>Watching the lips to listen better: Speech denoising using cross-modal audio-visual attention<span class="pl-pds">}</span></span>,
+            <span class="pl-s">booktitle</span> = <span class="pl-s"><span class="pl-pds">{</span><span class="pl-pds">}</span></span>,
+            <span class="pl-s">year</span> = <span class="pl-s"><span class="pl-pds">{</span>2022<span class="pl-pds">}</span></span>
+        }</pre></div>
+        </div>
+        <div class="row">  <br>   </div>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Webpage Template Courtesy <a href="http://sound-of-pixels.csail.mit.edu/">CSAIL, MIT</a>.</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="./assets/jquery.min.js"></script>
+    <script src="./assets/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="./assets/jquery.easing.min.js"></script>
+
+    <!-- Custom JavaScript for this theme -->
+    <script src="./assets/scrolling-nav.js"></script>
+
+
+</body></html>

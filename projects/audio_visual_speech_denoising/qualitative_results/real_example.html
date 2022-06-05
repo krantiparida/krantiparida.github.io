@@ -1,0 +1,91 @@
+    <table>
+        <style> table, th, td {border: 1px solid black;} </style>
+        <th>Noisy Audio</th>
+        <th>Output</th>
+        <th>Remarks</th>
+        <tr>
+            <td>
+                <video width="712" height="400" controls>
+                    <source src="real_videos/rec430_noisy.mp4" type="video/mp4">
+                </video>
+           </td>
+           <td>
+               <video width="712" height="400" controls>
+                  <source src="real_videos/rec430_clean.mp4" type="video/mp4">
+               </video>
+           </td>
+           <td>Video recorded in a heavy background noise and can be found commonly for YouTubers recording cooking video. 
+               Our method is able to extrct out the clean signal.
+               <br>
+               <br>
+               <br>
+               <br>
+               Note: This video was recorded by one of our group member and we have hidden the face to maintain anonymity and privacy. 
+               Please note we have used the mouth region as required by our model and the face is hidden only for illustration.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <video width="712" height="400" controls>
+                    <source src="real_videos/reporter_windy_noisy.mp4" type="video/mp4">
+                </video>
+           </td>
+           <td>
+               <video width="712" height="400" controls>
+                  <source src="real_videos/reporter_windy_clean.mp4" type="video/mp4">
+               </video>
+           </td>
+           <td> A reported reporting under a very windy condition. Our method is able to extract out the input speech signal. 
+               Although our method degrades in the region where it ovelaps with the strong wind noise but the speech is clean and the 
+               words can be easily understood.
+               <br>
+               <br>
+               <br>
+               <br>
+               link: <a href="https://www.youtube.com/watch?v=zbdf1ayyijc" target="_blank">https://www.youtube.com/watch?v=zbdf1ayyijc</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <video width="712" height="400" controls>
+                    <source src="real_videos/youtuber_noisy.mp4" type="video/mp4">
+                </video>
+           </td>
+           <td>
+               <video width="712" height="400" controls>
+                  <source src="real_videos/youtuber_clean.mp4" type="video/mp4">
+               </video>
+           </td>
+           <td> In this video a YouTuber is recording in a busy street where the audio is mixed with vehicle noise and other persons' voice.
+               Here, we can observe that the background noise like car honking and random chatter is decreased significantly. Also towards the end
+               of the video an engine like noise can be heard in the original video and this has completely been removed by our method. 
+               <br>
+               <br>
+               <br>
+               <br>
+               link: <a href="https://www.youtube.com/watch?v=9qM2ZAJsKCg" target="_blank">https://www.youtube.com/watch?v=9qM2ZAJsKCg</a>
+           </td>
+        </tr>
+        <tr>
+            <td>
+                <video width="712" height="400" controls>
+                    <source src="real_videos/reporter_war_noisy.mp4" type="video/mp4">
+                </video>
+           </td>
+           <td>
+               <video width="712" height="400" controls>
+                  <source src="real_videos/reporter_war_clean.mp4" type="video/mp4">
+               </video>
+           </td>
+           <td> Here, a reporter is reporting from a violent protest site and the input audio conatins a variety of backgorund noise. 
+                Towards the end of the video, it can be seen that some explosive is thrown towards the reporter that makes a blast sound. 
+                This blast sound is almost completely removed in our denoised output.
+               <br>
+               <br>
+               <br>
+               <br>
+               link: <a href="https://youtu.be/RH8S8RhtvHA?t=83" target="_blank">https://youtu.be/RH8S8RhtvHA?t=83</a> 
+           </td>
+        </tr>
+    </table>
+    
