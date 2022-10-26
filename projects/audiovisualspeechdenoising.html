@@ -161,15 +161,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#abstract">Abstract</a>
-            </li>
-            <li class="nav-item">
+            </li> -->
+            <!-- <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#download">Download</a>
-            </li>
-            <li class="nav-item">
+            </li> -->
+            <!-- <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#res">Results</a>
-            </li>
+            </li> -->
             <!-- <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="#sup-res">Supplementary Results</a>
             </li> -->
@@ -193,7 +193,7 @@
       </div>
     </header>
 
-    <section id="demo" style="margin-bottom:-16rem;width:100%;">
+    <!-- <section id="demo" style="margin-bottom:-16rem;width:100%;">
     <div class="container" style="margin-top:-7rem;width:100%;">
         <div class="row">
           <div><img src="./audio_visual_speech_denoising/imgs/block_diag.jpg" width="100%"></div>
@@ -210,7 +210,7 @@
                 <div><img src="./img/block_diag.png" width="90%"></div>
             </div>
         </div>       -->
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-lg-12 mx-auto">
             <p class="lead" align="justify">
               We address the problem of speech denoising where the goal is to extract clean speech signal from a noisy signal. Traditionally, the task of denoising has been performed using audio modality only. However, human speech perception is inherently multimodal where cues from visual modality are used to better understand what is being said in a noisy environment. Similar observation has been made with computational denoising methods, i.e., performance of audio only model improves when visual modality is added. Inspired by these findings we propose a novel audio-visual fusion network for adaptively combining both modalities for the task of speech audio denoising. We improve upon an existing audio only approach which first extracts the silent intervals (short pauses) and then uses them for estimating noise profile, which it eventually employs for denoising. We show that instead of explicitly extracting the silent region and then denoising, training an end-to-end network is more appropriate, and adding visual information, from lip regions, further improves the performance. We evaluate the proposed approach on a large scale audio-visual dataset Voxceleb2 and obtain state-of-the-art results. We also demonstrate generalization to unseen speakers at test time.
@@ -218,9 +218,9 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
-    <section id="download" class="bg-light">
+    <!-- <section id="download" class="bg-light">
       <div class="container" style="margin-top:-5rem;margin-bottom:-5rem;">
         <div class="row">
           <div class="col-lg-4 mx-auto text-center">
@@ -238,7 +238,7 @@
     
         </div>
       </div>
-    </section>
+    </section> --> -->
 
     <section id="sup-res" style="margin-bottom:-5rem;width:100%;">
         <div class="container" style="margin-top:-5rem;width:100%;">
@@ -262,7 +262,9 @@
                    </video>
                </td>
                <td>Video recorded in a heavy background noise and can be found commonly for YouTubers recording cooking video. 
-                   Our method is able to extract out the clean signal.
+                   Our method is able to extract out the clean signal. <br>
+
+                  Note: This video was recorded by one of our group members and we have hidden the face to maintain privacy. Please note we have used the mouth region as required by our model and the face is hidden only for illustration.
                 </td>
             </tr>
             <tr>
@@ -276,8 +278,8 @@
                       <source src="./audio_visual_speech_denoising/qualitative_results/real_videos/reporter_windy_clean.mp4" type="video/mp4">
                    </video>
                </td>
-               <td> A reported reporting under a very windy condition. Our method is able to extract out the input speech signal. 
-                   Although our method degrades in the region where it ovelaps with the strong wind noise but the speech is clean and the 
+               <td> A reporter reporting under a very windy condition. Our method is able to extract out the input speech signal. 
+                   Although our method degrades in the region where it overlaps with the strong wind noise but the speech is clean and the 
                    words can be easily understood.
                    <br>
                    link: <a href="https://www.youtube.com/watch?v=zbdf1ayyijc" target="_blank">https://www.youtube.com/watch?v=zbdf1ayyijc</a>
@@ -381,9 +383,8 @@
     </section>             -->
     
 
-    <section id="reference" class="bg-light">
+    <!-- <section id="reference" class="bg-light">
       <div class="container" style="margin-top:-5rem;width:100%;">
-        <!-- <div class="row">  <br>   </div> -->
         <div class="row" style="margin-top:10px;">
             <div class="col-lg-12 mx-auto"><h2>Reference</h2></div>
             <p>If you use the code or dataset from the project, please cite:</p>
@@ -397,7 +398,7 @@
         <div class="row">  <br>   </div>
 
       </div>
-    </section>
+    </section> -->
 
     <!-- Footer -->
     <footer class="py-5 bg-dark">
